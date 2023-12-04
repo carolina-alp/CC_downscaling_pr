@@ -1,0 +1,20 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+
+name: eval_model
+display_name: Evaluate Model
+type: command
+
+inputs:
+  score_result:
+    type: uri_file
+
+outputs:
+  eval_output:
+    type: uri_folder
+
+environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu:1
+code: ./eval_src
+command: >-
+  python eval.py 
+  --score_result ${{inputs.score_result}} 
+  --eval_output ${{outputs.eval_output}}

@@ -1,0 +1,23 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+
+name: train_random_forest
+display_name: Train Model Random Forest
+type: command
+
+inputs:
+  data_train:
+    type: uri_file
+  criterion:
+    type: string
+
+outputs:
+  model_output_rf_pickle:
+    type: uri_folder    
+
+environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu:1
+code: ./train_RandomForest_src
+command: >-
+  python train_RandomForest.py 
+  --data_train ${{inputs.data_train}} 
+  --criterion ${{inputs.criterion}} 
+  --model_output_rf_pickle ${{outputs.model_output_rf_pickle}}

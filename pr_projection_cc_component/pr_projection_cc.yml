@@ -1,0 +1,23 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+
+name: pr_projection_cc
+display_name: Project data under Climate Change Scenarios
+type: command
+
+inputs:
+  data_pr_cc: 
+    type: uri_file
+  model_input:
+    type: uri_folder
+
+outputs:
+  projected_downscaling_pr:
+    type: uri_folder
+
+environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu:1
+code: ./pr_projection_cc_src
+command: >-
+  python pr_projection_cc.py 
+  --model_input ${{inputs.model_input}} 
+  --data_pr_cc ${{inputs.data_pr_cc}}
+  --projected_downscaling_pr ${{outputs.projected_downscaling_pr}}

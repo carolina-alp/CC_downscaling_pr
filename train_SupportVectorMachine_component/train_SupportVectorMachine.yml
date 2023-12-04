@@ -1,0 +1,23 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+
+name: train_support_vector_machine
+display_name: Train Model Support vector machine
+type: command
+
+inputs:
+  data_train:
+    type: uri_file
+  kernel:
+    type: string
+
+outputs:
+  model_output_svm_pickle:
+    type: uri_folder    
+
+environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu:1
+code: ./train_SupportVectorMachine_src
+command: >-
+  python train_SupportVectorMachine.py 
+  --data_train ${{inputs.data_train}} 
+  --kernel ${{inputs.kernel}} 
+  --model_output_svm_pickle ${{outputs.model_output_svm_pickle}}
